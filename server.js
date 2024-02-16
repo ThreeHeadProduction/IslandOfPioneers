@@ -1,29 +1,13 @@
-const express = require('express');
-const http = require('http');
-const { Server } = require("socket.io");
-const path = require('path');
-
-const app = express();
-const server = http.createServer(app);
-const io = new Server(server);
+const express = require("express")
+const app = express()
+const path = require("path")
 
 app.use(express.static(path.join(__dirname, 'public')));
+app.set('view engine', 'ejs')
 
+app.get('/', (req, res)=> {
+    res.render('login')
+    console.log(req);
+})
 
-io.on('connection', (socket) => {
-    console.log('Connected');
-
-    socket.on('disconnect', () => {
-        console.log('Connection lose');
-    });
-
-    socket.on('chat message', (msg) => {
-        io.emit('chat message', msg);
-    });
-
-});
-
-
-server.listen(80, () => {
-    console.log('listening on *:80');
-});
+app.listen(3000)
