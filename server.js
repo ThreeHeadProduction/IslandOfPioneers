@@ -35,7 +35,8 @@ io.on('connection', (socket) =>{
     socket.on('login', (data) => {
         checkLogin(data.username, data.password)
         .then(result => {
-            req.session.loggedIn = result
+            req.session.loggedIn = result.successful
+            req.session.username = result.data.username
             req.session.save()
         })
     })
