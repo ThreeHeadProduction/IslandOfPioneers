@@ -1,13 +1,47 @@
-const express = require("express")
-const app = express()
-const path = require("path")
+const express = require('express');
+const app = express();
+const http = require('http');
+const server = http.createServer(app);
+const { Server } = require("socket.io");
+const io = new Server(server);
+const path = require('path');
+const { checkLogin } = require('./backend/database');
+const session = require("express-session");
+
+const sessionMiddleware = session({
+    secret: "BananenBrot123",
+    resave: true,
+    saveUninitialized: true,
+});
+
+app.use(sessionMiddleware);
+io.engine.use(sessionMiddleware); 
+
 
 app.use(express.static(path.join(__dirname, 'public')));
-app.set('view engine', 'ejs')
 
 app.get('/', (req, res)=> {
-    res.render('login')
-    console.log(req);
+    if(req.session.loggedIn == true) {
+        res.sendFile(__dirname+ '/views/main.html')
+    } else {
+        res.sendFile(__dirname+'/views/login.html')
+    }
 })
 
-app.listen(3000)
+
+io.on('connection', (socket) =>{
+    const req = socket.request
+    
+    socket.on('login', (data) => {
+        checkLogin(data.username, data.password)
+        .then(result => {
+            req.session.loggedIn = result
+            req.session.save()
+        })
+    })
+    
+})
+
+server.listen(80, () => {
+    console.log("Server is running on Port *:80");
+})

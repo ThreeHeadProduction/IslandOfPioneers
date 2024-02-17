@@ -5,19 +5,20 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Island of Pioneers</title>
         <script src="https://pixijs.download/release/pixi.min.js"></script>
-        <link rel="stylesheet" href="style.css">
-        
+        <script src="/socket.io/socket.io.js"></script>
+        <link rel="stylesheet" href="/login/login.css">
+        <script src="/login/login.js"></script>
     </head>
     <body>
         <div class="wrapper">
             <h1>Login</h1>
             
             <div class="inputbox">
-                <input type="text" placeholder="Username" required>
+                <input id="username" type="text" placeholder="Username" required>
             </div>
             
             <div class="inputbox">
-                <input type="text" placeholder="Password" required>
+                <input id="password" type="text" placeholder="Password" required>
             </div>
 
             <div class="remember-forgot">
@@ -25,7 +26,7 @@
                 <a href="#">Forgot password?</a>
             </div>
 
-            <button class="btn" type="submit">Login</button>
+            <button class="btn" type="submit" onclick=login()>Login</button>
 
             <div class="register-link">
                 <p>dont have an account? 
