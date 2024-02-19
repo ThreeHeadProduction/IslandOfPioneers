@@ -1,28 +1,36 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Island of Pioneers</title>
-        <script src="/socket.io/socket.io.js"></script>
-        <link rel="stylesheet" href="/public/mainMenu/mainMenu.css">
-        <script src="public/mainMenu/mainMenu.js"></script>
-    </head>
-    <body>
 
-        <header>
-            <button type="button">Abmelden</button>
-            <p id="username">Username</p>
-        </header>
-        
-        <section>
-            <h1>Menü</h1>
-            <div> <button type="button">Lobby erstellen</button></div>
-            <div> <button type="button">Private erstellen</button></div>
-            <div> <button type="button">Schnelles Spiel</button></div>
-            <div> <button type="button">Spiel suchen</button></div>
-            <div> <button type="button">Einstellungen</button></div>
-        </section>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Island of Pioneers</title>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="global.js"></script>
+    <link rel="stylesheet" href="/mainMenu/mainMenu.css">
+    <script src="/mainMenu/mainMenu.js"></script>
 
-    </body>
+</head>
+
+<body>
+
+    <header>
+        <button id="btn-logOut" type="button" onclick="logOut()">Abmelden</button>
+        <p id="username"></p>
+    </header>
+
+    <section id="menu">
+        <h1>Menü</h1>
+        <div> <button class="btn-select" >Lobby erstellen</button></div>
+        <div> <button class="btn-select" >Private Lobby</button></div>
+        <div> <button class="btn-select" >Schnelles Spiel</button></div>
+        <div> <button class="btn-select" onclick="searchLobby()">Spiel suchen</button></div>
+        <div> <button class="btn-select" >Einstellungen</button></div>
+    </section>
+    <section id="searchLobby" style="display: none;">
+
+    </section>
+
+</body>
+
 </html>
