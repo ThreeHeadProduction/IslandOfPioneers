@@ -7,3 +7,8 @@ function login () {
         
         socket.emit('login', {username:username.value, password:password.value})
 }  
+
+socket.on('redirect', function(destination) {
+        console.log("test");
+        window.location.href = destination;
+    });
