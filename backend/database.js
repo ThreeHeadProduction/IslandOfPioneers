@@ -23,9 +23,9 @@ module.exports = {
 
         if (result.rowCount == 1)
         {
-            return true
+            return {successful:true, data:{username:result.rows[0].name}}
         }
-        return false
+        return {successful:false}
     },
     
     register() {
