@@ -5,8 +5,18 @@
   font-family: "Poppins", sans-serif;
 }
 
+::-moz-selection {
+  background-color: rgba(107, 107, 107, 0.8);
+  color: rgb(218, 218, 218); /* oder eine andere Textfarbe, die Sie bevorzugen */
+}
+
+::selection {
+  background-color: rgba(107, 107, 107, 0.8);
+  color: rgb(218, 218, 218); /* oder eine andere Textfarbe, die Sie bevorzugen */
+}
+
 body {
-  background-image: url("/assets/background/background-MainMenu.jpg");
+  background-image: url("/public/assets/background/background-MainMenu.jpg");
   background-size: cover;
   background-position: center;
   /* Position des Hintergrundbildes (zentriert) */
@@ -16,7 +26,7 @@ body {
   -webkit-backdrop-filter: blur(7px);
           backdrop-filter: blur(7px);
   background-position: 50% 50%; /* Hintergrundposition auf der Mitte des Elements */
-  animation: moveBackground 10s linear infinite alternate; /* Animation für die Hintergrundbewegung */
+  animation: moveBackground 20s linear infinite alternate; /* Animation für die Hintergrundbewegung */
 }
 @keyframes moveBackground {
   from {
@@ -56,30 +66,42 @@ header {
   /* horizontal mittig ausrichten */
 }
 
+#searchLobby {
+  flex: 1;
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  /* vertikal mittig ausrichten */
+  align-items: center;
+  /* horizontal mittig ausrichten */
+}
+
+#option {
+  flex: 1;
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  /* vertikal mittig ausrichten */
+  align-items: center;
+  /* horizontal mittig ausrichten */
+}
+
 .btn-select {
   width: 300px;
   height: 70px;
   font-weight: 600;
   border-radius: 15px;
   background-color: transparent;
-  /* Transparenter Hintergrund */
   color: rgba(43, 42, 42, 0.9);
-  /* Textfarbe */
   padding: 18px 40px;
   margin: 22px;
   font-size: 23px;
-  /* Schriftgröße */
   border: none;
-  /* Rand des Buttons entfernen */
   outline: none;
-  /* Entfernen Sie den Fokus-Rahmen */
   cursor: pointer;
-  /* Zeiger auf Mauszeiger ändern */
   position: relative;
-  /* Position relativ für das Overlay */
   overflow: hidden;
-  /* Verstecken Sie den überlappenden Bereich */
-  transition: 0.5s;
+  transition: 0.2s;
 }
 .btn-select:hover {
   transition: 0.5s;
@@ -91,22 +113,14 @@ header {
 }
 .btn-select::before {
   content: "";
-  /* Fügt ein Pseudo-Element hinzu */
   position: absolute;
-  /* Position absolut für das Overlay */
   top: 0;
-  /* Positionierung oben */
   left: 0;
-  /* Positionierung links */
   width: 100%;
-  /* Breite des Overlay */
   height: 100%;
-  /* Höhe des Overlay */
   background-color: rgba(196, 193, 193, 0.6);
-  /* Hintergrundfarbe mit Transparenz */
   z-index: -1;
-  /* Stellen Sie das Overlay hinter den Text */
-  transition: 0.5s;
+  transition: 0.2s;
 }
 
 #btn-logOut {
