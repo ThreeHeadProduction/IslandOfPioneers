@@ -9,7 +9,9 @@ const { checkLogin } = require('./backend/database');
 const session = require("express-session");
 const { log } = require('console');
 const cookieParser = require('cookie-parser');
+const { emit } = require('process');
 app.use(cookieParser());
+
 
 const sessionMiddleware = session({
     secret: "BananenBrot123",
@@ -33,17 +35,45 @@ app.get('/', (req, res) => {
 
 app.get('/main', (req, res) => {
     if (req.session.loggedIn == true) {
+
         const expirationDate = new Date();
         expirationDate.setDate(expirationDate.getDate() + 1);
         res.cookie('username', req.session.username, { expires: expirationDate });
-        res.sendFile(__dirname + '/views/mainMenu.html')
+        res.sendFile(__dirname + '/views/mainMenu.html');
+        io.on("connection", (socket) =>{
+            socket.emit("menuArea", "main");
+
+        })
+    }else {
+        res.redirect('/')
+    }
+})
+
+app.get('/main/optionMenu', (req, res) => {
+    if (req.session.loggedIn == true) {
+        res.sendFile(__dirname + '/views/mainMenu.html');
+        io.on("connection", (socket) =>{
+            socket.emit("menuArea", "optionMenu");
+
+        })
 
     } else {
         res.redirect('/')
     }
 })
 
+app.get('/main/searchLobby', (req, res) => {
+    if (req.session.loggedIn == true) {
+        res.sendFile(__dirname + '/views/mainMenu.html')
+        io.on("connection", (socket) =>{
+            socket.emit("menuArea", "searchMenu");
 
+        })
+
+    } else {
+        res.redirect('/')
+    }
+})
 
 io.on('connection', (socket) => {
     const req = socket.request
@@ -61,17 +91,13 @@ io.on('connection', (socket) => {
                     socket.emit('redirect', destination);
                 }
             })
-
     })
 
     socket.on('logout', (data) => {
         req.session.destroy();
-        io.emit('reloadPage');
-    })
-
+        socket.emit('reloadPage');
+    });
 })
-
-
 
 
 server.listen(80, () => {

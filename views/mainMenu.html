@@ -6,16 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Island of Pioneers</title>
     <script src="/socket.io/socket.io.js"></script>
-    <script src="/public/global.js"></script>
-    <link rel="stylesheet" href="/public//mainMenu/mainMenu.css">
-    <script src="/public/mainMenu/mainMenu.js"></script>
+    <script src="/global.js"></script>
+    <link rel="stylesheet" href="/mainMenu/mainMenu.css">
+    <script src="/mainMenu/mainMenu.js" defer></script>
 
 </head>
 
 <body>
 
     <header>
-        <button id="btn-logOut" type="button" onclick="logOut()">Abmelden</button>
+        <button id="btn-logOut" type="button" onclick="logout()">Abmelden</button>
         <p id="username"></p>
     </header>
 
@@ -27,12 +27,15 @@
         <div> <button class="btn-select" onclick="searchLobby()">Spiel suchen</button></div>
         <div> <button class="btn-select" onclick="openOptions()">Einstellungen</button></div>
     </section>
-    <section id="searchLobby">
-
+    <section id="searchMenu">
+        <h1>Lobby suchen</h1>
         <div><button class="btn-select" onclick="backMenu()">Zurück</button></div>
 
     </section>
-    <section id="option"></section>
+    <section id="optionMenu">
+        <h1>Option</h1>
+        <div><button class="btn-select" onclick="backMenu()">Zurück</button></div>
+    </section>
 
 </body>
 

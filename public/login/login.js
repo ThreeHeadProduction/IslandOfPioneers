@@ -1,3 +1,5 @@
+const socket = io();
+
 function login () {
 
         let username = document.getElementById('username')

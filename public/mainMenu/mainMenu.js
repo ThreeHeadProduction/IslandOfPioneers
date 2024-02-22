@@ -1,61 +1,64 @@
+const socket = io();
 
-// Set Username after successful login
 window.onload = function () {
     document.getElementById("username").textContent = getCookieValue('username');
 }
 
-function logOut() {
+function logout() {
+    document.getElementById("menu").style.display = "none";
+    document.getElementById("optionMenu").style.display = "none";
+    document.getElementById("searchMenu").style.display = "none";
     socket.emit("logout");
+    history.pushState({}, '', '/main');
 }
 
-socket.on('reloadPage', () => {
-    window.location.reload();
+
+socket.on('menuArea', (data) => {
+    console.log(data);
+    if (data === "optionMenu") openOptions();
+    else if (data === "searchMenu") searchLobby();
+    else {
+
+        document.getElementById("menu").style.display = "flex";
+        document.getElementById("optionMenu").style.display = "none";
+        document.getElementById("searchMenu").style.display = "none";
+    }
+
 });
 
-btn1;
-btn2;
+
 
 function openOptions() {
 
+
+    history.pushState({}, '', '/main/optionMenu');
     document.getElementById("menu").style.display = "none";
-    document.getElementById("option").style.display = "flex";
-
-    btn2 = document.createElement("button");
-    let t = document.createTextNode("Zurück");
-    btn2.appendChild(t);
-    btn2.className = "btn-select";
-    document.getElementById("option").appendChild(btn2);
-    btn2.setAttribute("onclick", "changeButtonText()");
-
-}
-
-
-function changeButtonText(){
-
-    if (btn2) btn2.remove();
-    document.getElementById("menu").style.display = "flex";
-    document.getElementById("option").style.display = "none";
+    document.getElementById("optionMenu").style.display = "flex";
+    document.getElementById("searchMenu").style.display = "none";
 }
 
 
 
 function searchLobby() {
-    document.getElementById("searchLobby").style.display = "flex";
-    document.getElementById("menu").style.display = "none";
 
-    btn1 = document.createElement("button");
-    let t = document.createTextNode("Test");
-    btn1.appendChild(t);
-    btn1.className = "btn-select";
-    document.getElementById("searchLobby").appendChild(btn1);
+
+    history.pushState({}, '', '/main/searchLobby');
+    document.getElementById("menu").style.display = "none";
+    document.getElementById("searchMenu").style.display = "flex";
+    document.getElementById("optionMenu").style.display = "none";
+
 
 }
-
-
 
 function backMenu() {
-    if (btn1) btn1.remove();
+
+    history.pushState({}, '', '/main');
     document.getElementById("menu").style.display = "flex";
-    document.getElementById("searchLobby").style.display = "none";
+    document.getElementById("searchMenu").style.display = "none";
+    document.getElementById("optionMenu").style.display = "none";
 }
 
+
+socket.on('reloadPage', () => {
+    window.location.reload();
+});

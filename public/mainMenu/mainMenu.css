@@ -16,7 +16,7 @@
 }
 
 body {
-  background-image: url("/public/assets/background/background-MainMenu.jpg");
+  background-image: url("/assets/background/background-MainMenu.jpg");
   background-size: cover;
   background-position: center;
   /* Position des Hintergrundbildes (zentriert) */
@@ -58,7 +58,7 @@ header {
 
 #menu {
   flex: 1;
-  display: flex;
+  display: none;
   flex-direction: column;
   justify-content: center;
   /* vertikal mittig ausrichten */
@@ -66,7 +66,7 @@ header {
   /* horizontal mittig ausrichten */
 }
 
-#searchLobby {
+#searchMenu {
   flex: 1;
   display: none;
   flex-direction: column;
@@ -76,7 +76,7 @@ header {
   /* horizontal mittig ausrichten */
 }
 
-#option {
+#optionMenu {
   flex: 1;
   display: none;
   flex-direction: column;

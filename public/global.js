@@ -1,5 +1,3 @@
-const socket = io();
-
 function getCookieValue(cookieName) {
     const cookieArray = document.cookie.split(';');
     for (let cookie of cookieArray) {
