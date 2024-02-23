@@ -1,64 +1,40 @@
 const socket = io();
 
 window.onload = function () {
-    document.getElementById("username").textContent = getCookieValue('username');
-}
+  document.getElementById("username").textContent = getCookieValue("username");
+  const currentArea = localStorage.getItem("currentArea");
+  if ("/main/optionMenu" == currentArea) optionMenu();
+  else if ("/main/searchLobby" == currentArea) searchMenu();
+  else if ("/main" == currentArea) mainMenu();
+};
 
 function logout() {
-    document.getElementById("menu").style.display = "none";
-    document.getElementById("optionMenu").style.display = "none";
-    document.getElementById("searchMenu").style.display = "none";
-    socket.emit("logout");
-    history.pushState({}, '', '/main');
+  socket.emit("logout");
+  history.pushState({}, "", "/");
 }
 
-
-socket.on('menuArea', (data) => {
-    console.log(data);
-    if (data === "optionMenu") openOptions();
-    else if (data === "searchMenu") searchLobby();
-    else {
-
-        document.getElementById("menu").style.display = "flex";
-        document.getElementById("optionMenu").style.display = "none";
-        document.getElementById("searchMenu").style.display = "none";
-    }
-
-});
-
-
-
-function openOptions() {
-
-
-    history.pushState({}, '', '/main/optionMenu');
-    document.getElementById("menu").style.display = "none";
-    document.getElementById("optionMenu").style.display = "flex";
-    document.getElementById("searchMenu").style.display = "none";
+function optionMenu() {
+  history.pushState(null, null, "/main/optionMenu");
+  localStorage.setItem("currentArea", "/main/optionMenu");
+  document.getElementById("mainMenu").style.display = "none";
+  document.getElementById("optionMenu").style.display = "flex";
 }
 
-
-
-function searchLobby() {
-
-
-    history.pushState({}, '', '/main/searchLobby');
-    document.getElementById("menu").style.display = "none";
-    document.getElementById("searchMenu").style.display = "flex";
-    document.getElementById("optionMenu").style.display = "none";
-
-
+function searchMenu() {
+  history.pushState(null, null, "/main/searchLobby");
+  localStorage.setItem("currentArea", "/main/searchLobby");
+  document.getElementById("mainMenu").style.display = "none";
+  document.getElementById("searchMenu").style.display = "flex";
 }
 
-function backMenu() {
-
-    history.pushState({}, '', '/main');
-    document.getElementById("menu").style.display = "flex";
-    document.getElementById("searchMenu").style.display = "none";
-    document.getElementById("optionMenu").style.display = "none";
+function mainMenu() {
+  history.pushState(null, null, "/main");
+  localStorage.setItem("currentArea", "/main");
+  document.getElementById("mainMenu").style.display = "flex";
+  document.getElementById("searchMenu").style.display = "none";
+  document.getElementById("optionMenu").style.display = "none";
 }
 
-
-socket.on('reloadPage', () => {
-    window.location.reload();
+socket.on("reloadPage", () => {
+  window.location.reload();
 });

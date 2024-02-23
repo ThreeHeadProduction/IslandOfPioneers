@@ -9,9 +9,7 @@ const { checkLogin } = require('./backend/database');
 const session = require("express-session");
 const { log } = require('console');
 const cookieParser = require('cookie-parser');
-const { emit } = require('process');
 app.use(cookieParser());
-
 
 const sessionMiddleware = session({
     secret: "BananenBrot123",
@@ -22,61 +20,40 @@ const sessionMiddleware = session({
 app.use(sessionMiddleware);
 io.engine.use(sessionMiddleware);
 
-
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', (req, res) => {
-    if (req.session.loggedIn == true) {
-        res.redirect('/main')
-    } else {
-        res.sendFile(__dirname + '/views/login.html')
-    }
+
+    if (req.session.loggedIn == true) res.redirect('/main');
+    else res.sendFile(__dirname + '/views/login.html');
 })
 
 app.get('/main', (req, res) => {
+
     if (req.session.loggedIn == true) {
 
         const expirationDate = new Date();
         expirationDate.setDate(expirationDate.getDate() + 1);
         res.cookie('username', req.session.username, { expires: expirationDate });
         res.sendFile(__dirname + '/views/mainMenu.html');
-        io.on("connection", (socket) =>{
-            socket.emit("menuArea", "main");
-
-        })
-    }else {
-        res.redirect('/')
-    }
+    } else res.redirect('/');
 })
 
 app.get('/main/optionMenu', (req, res) => {
-    if (req.session.loggedIn == true) {
-        res.sendFile(__dirname + '/views/mainMenu.html');
-        io.on("connection", (socket) =>{
-            socket.emit("menuArea", "optionMenu");
 
-        })
-
-    } else {
-        res.redirect('/')
-    }
+    if (req.session.loggedIn == true) res.sendFile(__dirname + '/views/mainMenu.html');
+    else res.redirect('/');
 })
 
 app.get('/main/searchLobby', (req, res) => {
-    if (req.session.loggedIn == true) {
-        res.sendFile(__dirname + '/views/mainMenu.html')
-        io.on("connection", (socket) =>{
-            socket.emit("menuArea", "searchMenu");
 
-        })
-
-    } else {
-        res.redirect('/')
-    }
+    if (req.session.loggedIn == true) res.sendFile(__dirname + '/views/mainMenu.html');
+    else res.redirect('/');
 })
 
 io.on('connection', (socket) => {
-    const req = socket.request
+
+    const req = socket.request;
 
     socket.on('login', (data) => {
         checkLogin(data.username, data.password)
@@ -99,7 +76,4 @@ io.on('connection', (socket) => {
     });
 })
 
-
-server.listen(80, () => {
-    console.log("Server is running on Port *:80");
-})
+server.listen(80, () => console.log("Server is running on Port *:80"));
