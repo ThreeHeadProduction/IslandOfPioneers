@@ -1,0 +1,135 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: "Poppins", sans-serif;
+  }
+  
+  ::selection {
+    background-color: rgba(107, 107, 107, 0.8);
+    color: rgb(218, 218, 218);
+  }
+  body {
+    background-color: rgb(18, 59, 75);
+    background-image: url("/assets/background/background-MainMenu.jpg");
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    backdrop-filter: blur(7px);
+    background-position: 50% 50%;
+    animation: moveBackground 20s linear infinite alternate;
+  
+    @keyframes moveBackground {
+      from {
+        background-position: 100% 100%;
+      }
+      to {
+        background-position: 50% 50%;
+      }
+    }
+  }
+  
+  h1 {
+    font-size: 55px;
+    padding-bottom: 32px;
+  }
+  
+  #username {
+    margin: 25px;
+    font-size: 30px;
+    font-weight: 600;
+    color: white;
+  }
+  
+  header {
+    justify-content: space-between;
+    display: flex;
+    background-color: rgba(0, 0, 0, 0.4);
+    align-items: center;
+  }
+  
+  .menu-container {
+    flex: 1;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  #mainMenu {
+    @extend .menu-container;
+  }
+  
+  #searchMenu {
+    @extend .menu-container;
+  }
+  
+  #optionMenu {
+    @extend .menu-container;
+  }
+  
+  .btn-select {
+    width: 300px;
+    height: 70px;
+    font-weight: 600;
+    border-radius: 15px;
+    background-color: transparent;
+    color: rgba(43, 42, 42, 0.9);
+    padding: 18px 40px;
+    margin: 22px;
+    font-size: 23px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: 0.2s;
+  
+    &:hover {
+      transition: 0.5s;
+      opacity: 0.8;
+      font-size: 22px;
+  
+      &::before {
+        background-color: rgba(255, 255, 255, 1);
+      }
+    }
+  
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(196, 193, 193, 0.6);
+      z-index: -1;
+      transition: 0.2s;
+    }
+  }
+  
+  #btn-logOut {
+    width: 300px;
+    height: 70px;
+    font-weight: 600;
+    border-radius: 15px;
+    background-color: rgba(243, 0, 0, 0.576);
+    color: rgba(161, 161, 161, 0.8);
+    padding: 18px 40px;
+    margin: 22px;
+    font-size: 23px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: 0.5s;
+  
+    &:hover {
+      background-color: rgba(193, 190, 190, 0.576);
+      transition: 0.5s;
+      color: #040404;
+    }
+  }
+  
