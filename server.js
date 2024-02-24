@@ -51,6 +51,12 @@ app.get('/main/searchLobby', (req, res) => {
     else res.redirect('/');
 })
 
+app.get('/main/lobby', (req, res) => {
+
+    if (req.session.loggedIn == true) res.sendFile(__dirname + '/views/lobby.html');
+    else res.redirect('/');
+})
+
 io.on('connection', (socket) => {
 
     const req = socket.request;

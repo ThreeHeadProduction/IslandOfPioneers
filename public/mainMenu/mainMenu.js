@@ -38,3 +38,8 @@ function mainMenu() {
 socket.on("reloadPage", () => {
   window.location.reload();
 });
+
+
+function createLobby() {
+  window.location.href = '/main/lobby'
+}
