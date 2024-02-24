@@ -6,7 +6,7 @@ const { Server } = require("socket.io");
 const io = new Server(server);
 const path = require('path');
 const { checkLogin } = require('./backend/database');
-const { checkForLobbys, countLobbys, joinLobby } = require('./backend/lobbyHandler')
+const { createLobby, quickPlay } = require('./backend/lobbyHandler')
 const session = require("express-session");
 const cookieParser = require('cookie-parser');
 const sessionMiddleware = session({
@@ -50,18 +50,22 @@ app.get('/main/searchLobby', (req, res) => {
     else res.redirect('/');
 })
 
-app.get('/main/lobby', (req, res) => {
 
+app.get('/main/lobby', (req, res) => {
     if (req.session.loggedIn == true) {
-        const lobby = checkForLobbys()
-        io.once('connection', (socket) => {
-            if(socket.request.session.lobbyID === undefined) {
-                socket.join(lobby.id)
-                socket.request.session.lobbyID = lobby.id
-                socket.request.session.save()
-            }
-        })
-        res.redirect('/main/lobby/'+lobby.id)
+        if (req.session.lobbyID) {
+            res.redirect('/main/lobby/' + req.session.lobbyID)
+        } else {
+            const lobby = createLobby()
+            io.once('connection', (socket) => {
+                if (socket.request.session.lobbyID === undefined) {
+                    socket.join(lobby.id)
+                    socket.request.session.lobbyID = lobby.id
+                    socket.request.session.save()
+                }
+            })
+            res.redirect('/main/lobby/' + lobby.id)
+        }
     }
     else res.redirect('/');
 })
@@ -75,6 +79,29 @@ app.get('/main/lobby/:lobby', (req, res) => {
     }
     else res.redirect('/');
 })
+
+app.get('/main/quickplay', (req, res) => {
+    if (req.session.loggedIn == true) {
+        // Falls user  schon eine Lobby hat, wird er zu dieser redirected
+        if (req.session.lobbyID) {
+            res.redirect('/main/lobby/' + req.session.lobbyID)
+        } else {
+            // Eine Zufällige Lobby wird gesucht oder erstellt und zu dieser redirected
+            const lobby = quickPlay()
+            io.once('connection', (socket) => {
+                if (socket.request.session.lobbyID === undefined) {
+                    socket.join(lobby.id)
+                    socket.request.session.lobbyID = lobby.id
+                    socket.request.session.save()
+                }
+            })
+            res.redirect('/main/lobby/' + lobby.id)
+        }
+    }
+    else res.redirect('/');
+})
+
+
 
 io.on('connection', (socket) => {
 

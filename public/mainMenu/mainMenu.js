@@ -43,3 +43,7 @@ socket.on("reloadPage", () => {
 function createLobby() {
   window.location.href = '/main/lobby'
 }
+
+function quickGame() {
+  window.location.href = '/main/quickplay'
+}

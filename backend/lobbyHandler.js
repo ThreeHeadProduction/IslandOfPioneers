@@ -17,14 +17,13 @@ function createLobby() {
 }
 
 function findRandomLobby() {
-    const lobby = allLobbys[Math.round(Math.random()*(allLobbys.length-1))] 
-    return lobby
+    return allLobbys[Math.round(Math.random()*(allLobbys.length-1))]
 }
 
 
 
 module.exports = {
-    checkForLobbys() {
+    quickPlay() {
         if (allLobbys.length==0) {
             /* Gibt neue Lobby wenn keine existiert zurück*/
             return createLobby()
@@ -33,7 +32,8 @@ module.exports = {
     },
     countLobbys() {
         return allLobbys.length
-    }
+    },
+    createLobby: createLobby
 }
 
 
