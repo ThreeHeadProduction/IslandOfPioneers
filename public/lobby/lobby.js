@@ -7,7 +7,7 @@ window.onload = function () {
     form.addEventListener('submit', (e) => {
         e.preventDefault()
         if(input.value.trim() != "") {
-            addMessage(input.value)
+            socket.emit('chat-message', input.value)
             input.value = ""
         }
     })
@@ -31,4 +31,8 @@ function addMessage(msg) {
 socket.on('join-Lobby', (data) => {
     const lobbyID = document.getElementById('lobbyID')
     lobbyID.innerText = '#'+data
+})
+
+socket.on('chat-message', (msg) => {
+    addMessage(msg)
 })

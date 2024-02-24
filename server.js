@@ -99,6 +99,10 @@ io.on('connection', (socket) => {
         req.session.destroy();
         socket.emit('reloadPage');
     });
+
+    socket.on('chat-message', (msg) => {
+        io.to(req.session.lobbyID).emit('chat-message', msg)
+    })
 })
 
 server.listen(80, () => console.log("Server is running on Port *:80"));
