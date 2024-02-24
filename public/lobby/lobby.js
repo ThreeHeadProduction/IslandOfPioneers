@@ -1,7 +1,8 @@
+var socket = io()
+
 window.onload = function () {
     const form = document.getElementById('chatControls')
     const input = document.getElementById('chatInput')
-    const id = document.getElementById('lobbyID')
 
     form.addEventListener('submit', (e) => {
         e.preventDefault()
@@ -11,11 +12,6 @@ window.onload = function () {
         }
     })
 
-    let idText = "#"
-    for(let i =0;i<5;i++) {
-        idText += Math.round((Math.random()*9))
-    }
-    id.innerText = idText
 }
 
 function copyToClipboard() {
@@ -31,3 +27,8 @@ function addMessage(msg) {
     messages.appendChild(item);
     messages.scrollTo(0, messages.scrollHeight);
 }
+
+socket.on('join-Lobby', (data) => {
+    const lobbyID = document.getElementById('lobbyID')
+    lobbyID.innerText = '#'+data
+})

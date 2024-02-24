@@ -6,17 +6,16 @@ const { Server } = require("socket.io");
 const io = new Server(server);
 const path = require('path');
 const { checkLogin } = require('./backend/database');
+const { checkForLobbys, countLobbys, joinLobby } = require('./backend/lobbyHandler')
 const session = require("express-session");
-const { log } = require('console');
 const cookieParser = require('cookie-parser');
-app.use(cookieParser());
-
 const sessionMiddleware = session({
     secret: "BananenBrot123",
     resave: true,
     saveUninitialized: true,
 });
 
+app.use(cookieParser());
 app.use(sessionMiddleware);
 io.engine.use(sessionMiddleware);
 
@@ -53,7 +52,27 @@ app.get('/main/searchLobby', (req, res) => {
 
 app.get('/main/lobby', (req, res) => {
 
-    if (req.session.loggedIn == true) res.sendFile(__dirname + '/views/lobby.html');
+    if (req.session.loggedIn == true) {
+        const lobby = checkForLobbys()
+        io.once('connection', (socket) => {
+            if(socket.request.session.lobbyID === undefined) {
+                socket.join(lobby.id)
+                socket.request.session.lobbyID = lobby.id
+                socket.request.session.save()
+            }
+        })
+        res.redirect('/main/lobby/'+lobby.id)
+    }
+    else res.redirect('/');
+})
+
+app.get('/main/lobby/:lobby', (req, res) => {
+    if (req.session.loggedIn == true) {
+        res.sendFile(__dirname + '/views/lobby.html');
+        io.once('connection', (socket) => {
+            socket.emit('join-Lobby', socket.request.session.lobbyID)
+        })
+    }
     else res.redirect('/');
 })
 
