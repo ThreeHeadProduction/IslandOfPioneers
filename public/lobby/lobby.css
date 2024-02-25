@@ -40,12 +40,15 @@ body {
   margin: auto;
   border: 2px rgb(0, 0, 0) solid;
 }
-.lobby .playerList {
+.lobby #playerList {
   width: 30%;
   display: flex;
   flex-direction: column;
 }
-.lobby .playerList .playerName {
+.lobby #playerList .player {
+  background-color: rgb(112, 206, 36);
+}
+.lobby #playerList .playerName {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -115,14 +118,24 @@ body {
 }
 .lobby .gameInfo .settings {
   background-color: rgba(52, 118, 216, 0.404);
+  display: flex;
+  flex-direction: column;
 }
 .lobby .gameInfo .settings button {
   background-color: rgb(25, 202, 120);
   border: none;
   padding: 0 1rem;
+  font-size: larger;
 }
 .lobby .gameInfo .settings button:active {
   background-color: rgb(25, 173, 104);
+  transition: all 0.1s ease-out;
+}
+.lobby .gameInfo .settings #btn-leaveLobby {
+  background-color: rgb(248, 15, 15);
+}
+.lobby .gameInfo .settings #btn-leaveLobby:active {
+  background-color: rgb(189, 13, 13);
   transition: all 0.1s ease-out;
 }
 

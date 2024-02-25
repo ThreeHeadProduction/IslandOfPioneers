@@ -14,22 +14,7 @@
         <p onclick="copyToClipboard()" id="lobbyID"></p> 
     </div>
     <div class="lobby">
-        <div class="playerList">
-            <div class="player" style="background-color: rgba(255, 0, 200, 0.5);">
-                <p class="playerName">Simon</p>
-            </div>
-            <div class="player" style="background-color: rgba(33, 218, 48, 0.5);">
-                <p class="playerName">Simon</p>
-            </div>
-            <div class="player" style="background-color: rgba(51, 253, 209, 0.5);">
-                <p class="playerName">Simon</p>
-            </div>
-            <div class="player" style="background-color: rgba(206, 83, 35, 0.5);">
-                <p class="playerName">Simon</p>
-            </div>
-            <div class="player" style="background-color: rgba(31, 132, 190, 0.5);">
-                <p class="playerName">Simon</p>
-            </div>
+        <div id="playerList">
         </div>
         <div class="gameInfo">
             <div class="chat">
@@ -41,7 +26,8 @@
 
             </div>
             <div class="settings">
-                <button>Game Start</button>
+                <button id="btn-gameStart">Game Start</button>
+                <button id="btn-leaveLobby" onclick="leaveLobby()">Lobby verlassen</button>
             </div>
         </div>
     </div>

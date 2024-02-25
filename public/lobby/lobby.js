@@ -6,7 +6,7 @@ window.onload = function () {
 
     form.addEventListener('submit', (e) => {
         e.preventDefault()
-        if(input.value.trim() != "") {
+        if (input.value.trim() != "") {
             socket.emit('chat-message', input.value)
             input.value = ""
         }
@@ -20,19 +20,54 @@ function copyToClipboard() {
 }
 
 
-function addMessage(msg) {
+function addMessage(msg, color) {
     const messages = document.getElementById('messages');
     const item = document.createElement('li');
     item.textContent = msg;
+    item.style.color = color
     messages.appendChild(item);
     messages.scrollTo(0, messages.scrollHeight);
 }
 
-socket.on('join-Lobby', (data) => {
-    const lobbyID = document.getElementById('lobbyID')
-    lobbyID.innerText = '#'+data
-})
+function addUserToPlayerList(username) {
+    const playerDiv = document.createElement('div')
+    const playerName = document.createElement('p')
+    playerDiv.className = "player"
+    playerName.className = "playerName"
+
+    playerName.innerText = username
+
+    playerDiv.appendChild(playerName)
+    document.getElementById('playerList').appendChild(playerDiv)
+}
+
+function leaveLobby() {
+    socket.emit('leave-Lobby', "test")
+    window.location.href = '/main'
+}
 
 socket.on('chat-message', (msg) => {
-    addMessage(msg)
+    addMessage(msg, 'black')
+})
+
+socket.on('player-Leave', (msg) => {
+    addMessage(msg, '#F80F0F')
+})
+
+socket.on('player-Join', (msg) => {
+    addMessage(msg, '#14b50e')
+})
+
+
+socket.on('join-Lobby', (data) => {
+    const lobbyID = document.getElementById('lobbyID')
+    lobbyID.innerText = '#' + data
+})
+
+socket.on('user-update', (players) => {
+    document.getElementById('playerList').innerHTML = ""
+
+    players.forEach(player => {
+        addUserToPlayerList(player)
+    });
 })

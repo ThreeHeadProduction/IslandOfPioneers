@@ -6,7 +6,7 @@ const { Server } = require("socket.io");
 const io = new Server(server);
 const path = require('path');
 const { checkLogin } = require('./backend/database');
-const { createLobby, quickPlay } = require('./backend/lobbyHandler')
+const { createLobby, quickPlay, removeLobby, addPlayerToLobby, playerCountInLobby, getPlayersByLobbyID, removePlayerFromLobby } = require('./backend/lobbyHandler')
 const session = require("express-session");
 const cookieParser = require('cookie-parser');
 const sessionMiddleware = session({
@@ -59,7 +59,8 @@ app.get('/main/lobby', (req, res) => {
             const lobby = createLobby()
             io.once('connection', (socket) => {
                 if (socket.request.session.lobbyID === undefined) {
-                    socket.join(lobby.id)
+                    addPlayerToLobby(socket.request.session.username, lobby.id)
+                    console.log(socket.request.session.username + " added to lobby: " + lobby.id);
                     socket.request.session.lobbyID = lobby.id
                     socket.request.session.save()
                 }
@@ -74,7 +75,12 @@ app.get('/main/lobby/:lobby', (req, res) => {
     if (req.session.loggedIn == true) {
         res.sendFile(__dirname + '/views/lobby.html');
         io.once('connection', (socket) => {
-            socket.emit('join-Lobby', socket.request.session.lobbyID)
+            let lobbyID = socket.request.session.lobbyID
+            socket.join(lobbyID)
+            const players = getPlayersByLobbyID(lobbyID)
+            socket.emit('join-Lobby', lobbyID)
+            io.to(lobbyID).emit('user-update', players)
+            io.to(lobbyID).emit('player-Join', req.session.username +" ist der Lobby beigetreten.")
         })
     }
     else res.redirect('/');
@@ -90,7 +96,8 @@ app.get('/main/quickplay', (req, res) => {
             const lobby = quickPlay()
             io.once('connection', (socket) => {
                 if (socket.request.session.lobbyID === undefined) {
-                    socket.join(lobby.id)
+                    addPlayerToLobby(socket.request.session.username, lobby.id)
+                    console.log(socket.request.session.username + " added to lobby: " + lobby.id);
                     socket.request.session.lobbyID = lobby.id
                     socket.request.session.save()
                 }
@@ -128,7 +135,25 @@ io.on('connection', (socket) => {
     });
 
     socket.on('chat-message', (msg) => {
-        io.to(req.session.lobbyID).emit('chat-message', msg)
+        io.to(req.session.lobbyID).emit('chat-message', req.session.username +": " + msg)
+    })
+    
+    socket.on('leave-Lobby', (data) => {
+        let username = req.session.username
+        let lobbyID =  req.session.lobbyID
+        
+        removePlayerFromLobby(username, lobbyID)
+        const players = getPlayersByLobbyID(lobbyID)
+        io.to(lobbyID).emit('user-update', players)
+        io.to(lobbyID).emit('player-Leave', username +" hat die Lobby verlassen.")
+        console.log(username + " removed from lobby: " + lobbyID);
+        if(playerCountInLobby(lobbyID) == 0) {
+             removeLobby(lobbyID)
+             console.log("lobby: " + lobbyID + " closed");
+        }
+        socket.leave(lobbyID)
+        req.session.lobbyID = undefined
+        req.session.save()
     })
 })
 
