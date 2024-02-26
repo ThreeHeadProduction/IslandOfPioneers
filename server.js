@@ -6,7 +6,7 @@ const { Server } = require("socket.io");
 const io = new Server(server);
 const path = require('path');
 const { checkLogin } = require('./backend/database');
-const { createLobby, quickPlay, removeLobby, addPlayerToLobby, playerCountInLobby, getPlayersByLobbyID, removePlayerFromLobby } = require('./backend/lobbyHandler')
+const { createLobby, quickPlay, removeLobby, addPlayerToLobby, playerCountInLobby, getPlayersByLobbyID, removePlayerFromLobby, getLobbyByLobbyID } = require('./backend/lobbyHandler')
 const session = require("express-session");
 const cookieParser = require('cookie-parser');
 const sessionMiddleware = session({
@@ -140,6 +140,19 @@ io.on('connection', (socket) => {
             socket.emit('lobby-Code', lobbyID)
             io.to(lobbyID).emit('user-update', players)
             io.to(lobbyID).emit('player-Join', req.session.username + " ist der Lobby beigetreten.")
+        }
+    })
+
+    socket.on('join-Lobby', (lobbyID) => {
+        if(req.session.lobbyID===undefined) {
+            if(getLobbyByLobbyID(lobbyID)) {
+                addPlayerToLobby(req.session.username, lobbyID)
+                req.session.lobbyID = lobbyID
+                req.session.save()
+                socket.emit('redirect', '/main/lobby/' + req.session.lobbyID)
+            } else {
+                // keine Lobby mit dem Code gefunden
+            }
         }
     })
 })

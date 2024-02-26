@@ -49,11 +49,11 @@ function quickGame() {
 
 }
 
+
 function searchLobby() {
   const lobbyID = document.getElementById('lobbyID')
-  if(lobbyID.value!="") {
-    // Fehlermeldung weil kein Text eingegeben
-    return
+  if(lobbyID.value) {
+    socket.emit('join-Lobby', lobbyID.value)
+    lobbyID.value = ''
   }
-  socket.emit('join-Lobby', lobbyID.value)
 }

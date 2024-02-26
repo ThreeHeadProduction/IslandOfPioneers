@@ -35,6 +35,7 @@ function getLobbyByLobbyID(id) {
 
 module.exports = {
     createLobby: createLobby,
+    getLobbyByLobbyID: getLobbyByLobbyID,
     quickPlay() {
         if (allLobbys.length == 0) {
             /* Gibt neue Lobby wenn keine existiert zurück*/
