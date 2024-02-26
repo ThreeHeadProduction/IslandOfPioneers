@@ -59,7 +59,7 @@ socket.on('player-Join', (msg) => {
 })
 
 
-socket.on('join-Lobby', (data) => {
+socket.on('lobby-Code', (data) => {
     const lobbyID = document.getElementById('lobbyID')
     lobbyID.innerText = '#' + data
 })
@@ -71,3 +71,5 @@ socket.on('user-update', (players) => {
         addUserToPlayerList(player)
     });
 })
+
+socket.emit('enter-Lobby', null)

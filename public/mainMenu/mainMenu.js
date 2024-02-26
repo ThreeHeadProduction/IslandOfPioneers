@@ -35,15 +35,25 @@ function mainMenu() {
   document.getElementById("optionMenu").style.display = "none";
 }
 
-socket.on("reloadPage", () => {
-  window.location.reload();
+socket.on("redirect", (dir) => {
+  window.location.href = dir;
 });
 
 
 function createLobby() {
-  window.location.href = '/main/lobby'
+  socket.emit('create-Lobby', null)
 }
 
 function quickGame() {
-  window.location.href = '/main/quickplay'
+  socket.emit('quick-Play', null)
+
+}
+
+function searchLobby() {
+  const lobbyID = document.getElementById('lobbyID')
+  if(lobbyID.value!="") {
+    // Fehlermeldung weil kein Text eingegeben
+    return
+  }
+  socket.emit('join-Lobby', lobbyID.value)
 }
