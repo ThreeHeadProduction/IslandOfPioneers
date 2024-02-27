@@ -11,29 +11,29 @@
     </head>
     <body>
         <div class="wrapper">
-            <h1>Login</h1>
+            <h1>Register</h1>
             
+            <div class="inputbox">
+                <input id="email" type="text" placeholder="E-Mail" required>
+            </div>
+
             <div class="inputbox">
                 <input id="username" type="text" placeholder="Username" required>
             </div>
             
             <div class="inputbox">
-                <input id="password" type="text" placeholder="Password" required>
+                <input id="password" type="password" placeholder="Password" required>
+            </div>
+
+            <div class="inputbox">
+                <input id="repeatpassword" type="password" placeholder="Password" required>
             </div>
 
             <div class="remember-forgot">
-                <label><input type="checkbox"> Remeber me</label>
                 <a href="#">Forgot password?</a>
             </div>
 
-            <button class="btn" type="submit" onclick=login()>Login</button>
-
-            <div class="register-link">
-                <p>dont have an account? 
-                    <a href="\register">Register</a>
-                </p>
-
-            </div>
+            <button class="btn" type="submit" onclick=register()>Register</button>
 
         </div>
     </body>

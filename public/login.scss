@@ -12,6 +12,10 @@ body{
     background: darkslategray;
 }
 
+.error{
+    border: 2px solid red;
+}
+
 .wrapper{
     width: 420px;
     background: darkorchid;
@@ -85,7 +89,13 @@ body{
         cursor: pointer;
         font-size: 16px;
         color: black;
-        font-weight: 600; 
+        font-weight: 600;
+        
+        &:hover{
+            transition-timing-function: ease-in-out;
+            transition: 0.5s, 0.5s;
+            font-size: 13px;
+        }
     }
 
     .register-link{
