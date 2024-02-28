@@ -90,14 +90,14 @@ io.on('connection', (socket) => {
         io.to(req.session.lobbyID).emit('chat-message', req.session.username + ": " + msg)
     })
 
-    socket.on('leave-Lobby', (data) => {
+    socket.on('lobby-player-leave', (data) => {
         let username = req.session.username
         let lobbyID = req.session.lobbyID
         if (lobbyID) {
             removePlayerFromLobby(username, lobbyID)
             const players = getPlayersByLobbyID(lobbyID)
-            io.to(lobbyID).emit('user-update', players)
-            io.to(lobbyID).emit('player-Leave', username + " hat die Lobby verlassen.")
+            io.to(lobbyID).emit('lobby-playerlist-update', players)
+            io.to(lobbyID).emit('chat-player-leave', username + " hat die Lobby verlassen.")
             console.log(username + " removed from lobby: " + lobbyID);
             if (playerCountInLobby(lobbyID) == 0) {
                 removeLobby(lobbyID)
@@ -132,18 +132,18 @@ io.on('connection', (socket) => {
 
     })
 
-    socket.on('enter-Lobby', (data) => {
+    socket.on('lobby-player-join', (data) => {
         if (req.session.lobbyID) {
             let lobbyID = req.session.lobbyID
             socket.join(lobbyID)
             const players = getPlayersByLobbyID(lobbyID)
-            socket.emit('lobby-Code', lobbyID)
-            io.to(lobbyID).emit('user-update', players)
-            io.to(lobbyID).emit('player-Join', req.session.username + " ist der Lobby beigetreten.")
+            socket.emit('lobby-send-code', lobbyID)
+            io.to(lobbyID).emit('lobby-playerlist-update', players)
+            io.to(lobbyID).emit('chat-player-join', req.session.username + " ist der Lobby beigetreten.")
         }
     })
 
-    socket.on('join-Lobby', (lobbyID) => {
+        socket.on('lobby-code-join', (lobbyID) => {
         if(req.session.lobbyID===undefined) {
             if(getLobbyByLobbyID(lobbyID)) {
                 addPlayerToLobby(req.session.username, lobbyID)

@@ -42,7 +42,7 @@ function addUserToPlayerList(username) {
 }
 
 function leaveLobby() {
-    socket.emit('leave-Lobby', "test")
+    socket.emit('lobby-player-leave', "test")
     window.location.href = '/main'
 }
 
@@ -50,21 +50,21 @@ socket.on('chat-message', (msg) => {
     addMessage(msg, 'black')
 })
 
-socket.on('player-Leave', (msg) => {
+socket.on('chat-player-leave', (msg) => {
     addMessage(msg, '#F80F0F')
 })
 
-socket.on('player-Join', (msg) => {
+socket.on('chat-player-join', (msg) => {
     addMessage(msg, '#14b50e')
 })
 
 
-socket.on('lobby-Code', (data) => {
+socket.on('lobby-send-code', (data) => {
     const lobbyID = document.getElementById('lobbyID')
     lobbyID.innerText = '#' + data
 })
 
-socket.on('user-update', (players) => {
+socket.on('lobby-playerlist-update', (players) => {
     document.getElementById('playerList').innerHTML = ""
 
     players.forEach(player => {
@@ -72,4 +72,4 @@ socket.on('user-update', (players) => {
     });
 })
 
-socket.emit('enter-Lobby', null)
+socket.emit('lobby-player-join', null)

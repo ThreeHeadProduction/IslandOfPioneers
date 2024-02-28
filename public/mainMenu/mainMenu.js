@@ -53,7 +53,7 @@ function quickGame() {
 function searchLobby() {
   const lobbyID = document.getElementById('lobbyID')
   if(lobbyID.value) {
-    socket.emit('join-Lobby', lobbyID.value)
+    socket.emit('lobby-code-join', lobbyID.value)
     lobbyID.value = ''
   }
 }
