@@ -42,13 +42,12 @@ app.get('/register', (req, res)=> {
 
 app.get('/main', (req, res)=> {
     if(req.session.loggedIn == true) {
-        res.sendFile(__dirname+ '/views/main.html')
+        res.sendFile(__dirname+ '/views/mainMenu.html')
     } else {
         res.redirect('/')
     }
 })
 
-    
 app.get('/main/searchLobby', (req, res) => {
 
     if (req.session.loggedIn == true) res.sendFile(__dirname + '/views/mainMenu.html');
@@ -91,7 +90,7 @@ io.on('connection', (socket) => {
         console.log(data);
         checkRegister(data.email, data.username, data.password)
         .then(result => {
-                socket.emit('redirect', '/');
+                socket.emit('redirect', '/main');
         })
         
     })
