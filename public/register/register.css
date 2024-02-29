@@ -29,7 +29,17 @@ body {
   height: 50px;
   margin: 30px 0;
 }
-.wrapper .inputbox input {
+.wrapper .inputbox .userfield {
+  width: calc(100% - 50px);
+  height: 100%;
+  background: transparent;
+  outline: none;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 40px;
+  font-size: 16px;
+  color: #fff;
+}
+.wrapper .inputbox .node {
   width: calc(100% - 50px);
   height: 100%;
   background: transparent;
@@ -109,4 +119,4 @@ body {
   border-radius: 40px;
   font-size: 16px;
   color: #fff;
-}/*# sourceMappingURL=login.css.map */
+}/*# sourceMappingURL=register.css.map */

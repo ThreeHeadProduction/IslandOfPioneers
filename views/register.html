@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Island of Pioneers</title>
+        <script src="https://pixijs.download/release/pixi.min.js"></script>
+        <script src="/socket.io/socket.io.js"></script>
+        <link rel="stylesheet" href="\register\register.css">
+        <script src="/register/register.js"></script>
+    </head>
+    <body>
+        <div class="wrapper">
+            <h1>Register</h1>
+            
+            <div class="inputbox">
+                <input id="email" class="userfield" type="text" placeholder="E-Mail" required>
+            </div>
+
+            <div class="inputbox">
+                <input id="username" class="userfield" type="text" placeholder="Username" required>
+            </div>
+            
+            <div class="inputbox">
+                <input id="password" class="node" type="password" placeholder="Password" required>
+            </div>
+
+            <div class="inputbox">
+                <input id="repeatpassword" class="node" type="password" placeholder="Password" required>
+            </div>
+
+            <div class="remember-forgot">
+                <a href="#">Forgot password?</a>
+            </div>
+
+            <button class="btn" type="submit" onclick=register()>Register</button>
+
+        </div>
+    </body>
+</html>
