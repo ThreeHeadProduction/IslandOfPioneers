@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="/socket.io/socket.io.js"></script>
+    <link rel="stylesheet" href="/lobby/lobby.css">
+    <script src="/lobby/lobby.js"></script>
+    <title>Island of Pioneers</title>
+</head>
+<body>
+    <div class="lobbyText">
+        <p>Lobby</p>
+        <p onclick="copyToClipboard()" id="lobbyID"></p> 
+    </div>
+    <div class="lobby">
+        <div id="playerList">
+        </div>
+        <div class="gameInfo">
+            <div class="chat">
+                <ul id="messages"></ul>
+                <form id="chatControls">
+                    <input autocomplete="off" id="chatInput">
+                    <button class="chatSend">Senden</button>
+                </form>
+
+            </div>
+            <div class="settings">
+                <button id="btn-gameStart">Game Start</button>
+                <button id="btn-leaveLobby" onclick="leaveLobby()">Lobby verlassen</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

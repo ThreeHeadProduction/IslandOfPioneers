@@ -35,6 +35,25 @@ function mainMenu() {
   document.getElementById("optionMenu").style.display = "none";
 }
 
-socket.on("reloadPage", () => {
-  window.location.reload();
+socket.on("redirect", (dir) => {
+  window.location.href = dir;
 });
+
+
+function createLobby() {
+  socket.emit('create-Lobby', null)
+}
+
+function quickGame() {
+  socket.emit('quick-Play', null)
+
+}
+
+
+function searchLobby() {
+  const lobbyID = document.getElementById('lobbyID')
+  if(lobbyID.value) {
+    socket.emit('lobby-code-join', lobbyID.value)
+    lobbyID.value = ''
+  }
+}
