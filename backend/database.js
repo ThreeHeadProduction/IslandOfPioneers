@@ -28,7 +28,7 @@ module.exports = {
         return {successful:false}
     },
     
-    async register(email, username) {
+    async checkegister(email, username) {
 
         const client = new Client( {  
             host: process.env.DB_HOST,
@@ -48,9 +48,14 @@ module.exports = {
 
         if (result.rowCount == null)
         {
-            return {successful:true, data:{username:result.rows[0].name}}
+                const text = 'INSERT INTO userdata (email, username, password) Values ($1, $2, $3)'
+                const values = [email, username, password]
+
+                const result = await client.query(text, values);
+        } else{
+            return {successful:false}
         }
-        return {successful:false}
+        
 
     }
 

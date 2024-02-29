@@ -79,6 +79,11 @@ body {
   color: black;
   font-weight: 600;
 }
+.wrapper .btn:hover {
+  transition-timing-function: ease-in-out;
+  transition: 0.5s, 0.5s;
+  font-size: 13px;
+}
 .wrapper .register-link {
   font-size: 14px;
   text-align: center;
