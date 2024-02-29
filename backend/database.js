@@ -40,19 +40,15 @@ module.exports = {
 
         try {
             await client.connect();
-            console.log('Connected to the database');
 
             const text = 'SELECT * FROM userdata WHERE email = $1 or name = $2'
             const values = [email, username]
 
             const result = await client.query(text, values);
-            console.log('Query successful:', result.rows);
-
+        
             if (result.rowCount === 0) {
                 const text = 'INSERT INTO userdata (name, password, email) Values ($1, $2, $3)'
                 const values = [username, password, email]
-
-                console.log("send to server", email + " " + username + " " + password)
 
                 const result = await client.query(text, values);
 
@@ -61,6 +57,9 @@ module.exports = {
                     return { successful: true }
                 }
 
+            } else{
+                await client.end()
+                    return { successful: false }
             }
 
         } catch (error) {
@@ -70,13 +69,5 @@ module.exports = {
         } finally {
             await client.end();
         }
-
-
-        await client.connect();
-
-
-
-
     }
-
 }

@@ -66,7 +66,10 @@ io.on('connection', (socket) =>{
 
     socket.on('register',(data)=> {
         console.log(data);
-        checkRegister(data.email, data.username, data.password) 
+        checkRegister(data.email, data.username, data.password)
+        .then(result => {
+                socket.emit('redirect', '/');
+        })
         
     })
     
