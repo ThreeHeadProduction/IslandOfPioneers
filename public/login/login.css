@@ -29,11 +29,20 @@ body {
   height: 50px;
   margin: 30px 0;
 }
-.wrapper .inputbox input {
+.wrapper .inputbox .userfield {
   width: calc(100% - 50px);
   height: 100%;
   background: transparent;
-  border: none;
+  outline: none;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 40px;
+  font-size: 16px;
+  color: #fff;
+}
+.wrapper .inputbox .node {
+  width: calc(100% - 50px);
+  height: 100%;
+  background: transparent;
   outline: none;
   border: 2px solid rgba(255, 255, 255, 0.2);
   border-radius: 40px;
@@ -41,6 +50,9 @@ body {
   color: #fff;
 }
 .wrapper .inputbox input[type=text] {
+  padding: 0px 20px;
+}
+.wrapper .inputbox input[type=password] {
   padding: 0px 20px;
 }
 .wrapper .inputbox input::-moz-placeholder {
@@ -82,7 +94,7 @@ body {
 .wrapper .btn:hover {
   transition-timing-function: ease-in-out;
   transition: 0.5s, 0.5s;
-  font-size: 13px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
 }
 .wrapper .register-link {
   font-size: 14px;
@@ -96,4 +108,26 @@ body {
 }
 .wrapper .register-link p a:hover {
   text-decoration: underline;
+}
+
+.error {
+  width: calc(100% - 50px);
+  height: 100%;
+  background: transparent;
+  outline: none;
+  border: 2px solid rgb(255, 0, 0);
+  border-radius: 40px;
+  font-size: 16px;
+  color: #fff;
+}
+
+.node {
+  width: calc(100% - 50px);
+  height: 100%;
+  background: transparent;
+  outline: none;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 40px;
+  font-size: 16px;
+  color: #fff;
 }/*# sourceMappingURL=login.css.map */

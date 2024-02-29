@@ -12,9 +12,7 @@ body{
     background: darkslategray;
 }
 
-.error{
-    border: 2px solid red;
-}
+
 
 .wrapper{
     width: 420px;
@@ -34,19 +32,32 @@ body{
         height: 50px;
         margin: 30px 0;
 
-        input{
+        .userfield{
             width: calc(100% - 50px);
             height: 100%;
             background: transparent;
-            border: none;
             outline: none;
             border: 2px solid rgba(255,255,255, .2);
             border-radius: 40px;
             font-size: 16px;
-            color: #fff;
+            color: #fff;   
+        }
+
+        .node{
+            width: calc(100% - 50px);
+            height: 100%;
+            background: transparent;
+            outline: none;
+            border: 2px solid rgba(255,255,255, .2);
+            border-radius: 40px;
+            font-size: 16px;
+            color: #fff;  
         }
 
         input[type=text]{
+            padding: 0px 20px;
+        }
+        input[type=password]{
             padding: 0px 20px;
         }
 
@@ -94,7 +105,7 @@ body{
         &:hover{
             transition-timing-function: ease-in-out;
             transition: 0.5s, 0.5s;
-            font-size: 13px;
+            box-shadow: 0px 0px 10px rgba(0,0,0, .3);
         }
     }
 
@@ -112,5 +123,26 @@ body{
             }
         }
     }
+}
 
+.error{
+    width: calc(100% - 50px);
+    height: 100%;
+    background: transparent;
+    outline: none;
+    border: 2px solid rgba(255,0,0);
+    border-radius: 40px;
+    font-size: 16px;
+    color: #fff;   
+}
+
+.node{
+    width: calc(100% - 50px);
+    height: 100%;
+    background: transparent;
+    outline: none;
+    border: 2px solid rgba(255,255,255, .2);
+    border-radius: 40px;
+    font-size: 16px;
+    color: #fff;  
 }

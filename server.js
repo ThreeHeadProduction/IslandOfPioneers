@@ -66,7 +66,7 @@ io.on('connection', (socket) =>{
 
     socket.on('register',(data)=> {
         console.log(data);
-        checkRegister(data.email, data.name)
+        checkRegister(data.email, data.username, data.password) 
         
     })
     
