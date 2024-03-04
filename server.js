@@ -1,29 +1,16 @@
 const express = require('express');
+const app = express();
 const http = require('http');
+const server = http.createServer(app);
 const { Server } = require("socket.io");
+const io = new Server(server);
 const path = require('path');
 
-const app = express();
-const server = http.createServer(app);
-const io = new Server(server);
+app.use(express.static(path.join(__dirname, 'dist')));
 
-app.use(express.static(path.join(__dirname, 'public')));
-
-
-io.on('connection', (socket) => {
-    console.log('Connected');
-
-    socket.on('disconnect', () => {
-        console.log('Connection lose');
-    });
-
-    socket.on('chat message', (msg) => {
-        io.emit('chat message', msg);
-    });
-
-});
+app.get('/', (req, res) => {
+    res.sendFile(__dirname + '/dist/index.html');
+})
 
 
-server.listen(80, () => {
-    console.log('listening on *:80');
-});
+server.listen(80, () => console.log("Server is running on Port *:80"));
